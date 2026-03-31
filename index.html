@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-SUS PEC — Gestão de Saúde Eficiente e Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a2558;
+    --navy-mid: #123380;
+    --blue: #1a5ccc;
+    --blue-light: #3a7fd4;
+    --sky: #e8f1fb;
+    --green: #1db870;
+    --green-dark: #15a05e;
+    --white: #ffffff;
+    --off-white: #f5f8ff;
+    --gray: #6b7a99;
+    --gray-light: #e4ecf7;
+    --text: #1a2540;
+    --text-mid: #3d4e72;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6%;
+    height: 68px;
+    background: rgba(10,37,88,0.97);
+    backdrop-filter: blur(12px);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(10,37,88,.4); }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: 1.2rem;
+    color: var(--white); text-decoration: none;
+  }
+  .nav-logo span { color: var(--green); }
+  .nav-logo .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; display: inline-block; margin-left: 2px; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,.75); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--green); color: var(--white);
+    border: none; padding: 10px 22px; border-radius: 6px;
+    font-family: 'Sora',sans-serif; font-size: .85rem; font-weight: 600;
+    cursor: pointer; transition: background .2s, transform .2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 26px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 55%, #1a4fa0 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 100px 6% 60px;
+    overflow: hidden;
+  }
+  .hero-bg-circles {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .hero-bg-circles circle { fill: none; stroke: rgba(255,255,255,.04); }
+  .hero-bg-line {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 80px; overflow: hidden;
+  }
+  .hero-bg-line svg { width: 100%; height: 100%; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(29,184,112,.15); border: 1px solid rgba(29,184,112,.35);
+    color: #5de8a5; padding: 6px 14px; border-radius: 20px;
+    font-size: .8rem; font-weight: 600; letter-spacing: .05em;
+    margin-bottom: 24px;
+  }
+  .hero-badge svg { width: 14px; height: 14px; }
+  .hero-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 800; color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .hero-title em { color: var(--green); font-style: normal; }
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,.72);
+    line-height: 1.7; margin-bottom: 36px;
+    max-width: 480px;
+  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green); color: var(--white);
+    padding: 14px 28px; border-radius: 8px;
+    font-family: 'Sora',sans-serif; font-size: .95rem; font-weight: 700;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 24px rgba(29,184,112,.35);
+  }
+  .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(29,184,112,.45); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--white);
+    padding: 14px 28px; border-radius: 8px;
+    font-family: 'Sora',sans-serif; font-size: .95rem; font-weight: 600;
+    text-decoration: none; border: 2px solid rgba(255,255,255,.3); cursor: pointer;
+    transition: border-color .2s, background .2s, transform .2s;
+  }
+  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px; flex-wrap: wrap;
+  }
+  .hero-stat { border-left: 3px solid var(--green); padding-left: 14px; }
+  .hero-stat strong { display: block; font-family: 'Sora',sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--white); }
+  .hero-stat span { font-size: .8rem; color: rgba(255,255,255,.6); }
+
+  /* Hero mockup */
+  .hero-visual { position: relative; display: flex; justify-content: center; }
+  .mockup-wrapper {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    max-width: 540px;
+    box-shadow: 0 40px 80px rgba(0,0,0,.3);
+    backdrop-filter: blur(6px);
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .mockup-bar {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 12px;
+  }
+  .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mockup-dot.r{background:#ff5f57} .mockup-dot.y{background:#ffbd2e} .mockup-dot.g{background:#28ca41}
+  .mockup-title-bar {
+    flex:1; background: rgba(255,255,255,.1);
+    border-radius: 4px; height: 22px; margin: 0 10px;
+    display: flex; align-items: center; padding: 0 10px;
+    font-size: .7rem; color: rgba(255,255,255,.5);
+  }
+  .mockup-screen {
+    background: #f0f5ff;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ms-header {
+    background: var(--navy);
+    padding: 10px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .ms-header span { color: rgba(255,255,255,.8); font-size: .72rem; }
+  .ms-header .ms-user { display: flex; align-items: center; gap: 6px; }
+  .ms-avatar { width: 26px; height: 26px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .65rem; color: #fff; font-weight: 700; }
+  .ms-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .ms-row { display: flex; gap: 10px; }
+  .ms-card {
+    flex: 1; background: var(--white);
+    border-radius: 8px; padding: 12px;
+    box-shadow: 0 2px 8px rgba(10,37,88,.08);
+  }
+  .ms-card-label { font-size: .65rem; color: var(--gray); font-weight: 500; margin-bottom: 4px; }
+  .ms-card-value { font-family: 'Sora',sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+  .ms-card-sub { font-size: .6rem; color: var(--green); font-weight: 600; }
+  .ms-chart { background: var(--white); border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(10,37,88,.08); }
+  .ms-chart-label { font-size: .65rem; color: var(--gray); font-weight: 500; margin-bottom: 8px; }
+  .ms-bars { display: flex; gap: 5px; align-items: flex-end; height: 40px; }
+  .ms-bar { flex: 1; border-radius: 3px 3px 0 0; animation: growBar 1.5s ease forwards; transform-origin: bottom; }
+  @keyframes growBar { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+  .ms-table { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(10,37,88,.08); }
+  .ms-table-head { background: var(--sky); display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 7px 10px; }
+  .ms-table-head span { font-size: .6rem; color: var(--navy); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .ms-table-row { display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 7px 10px; border-bottom: 1px solid var(--gray-light); }
+  .ms-table-row:last-child{border:none}
+  .ms-table-row span { font-size: .65rem; color: var(--text-mid); }
+  .ms-badge { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: .58rem; font-weight: 600; }
+  .ms-badge.ok{background:#d4f5e5;color:#0f7a3e}
+  .ms-badge.warn{background:#fff3cd;color:#8a5800}
+
+  /* ── SECTION SHARED ── */
+  section { padding: 90px 6%; }
+  .section-label {
+    display: inline-block;
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 800; color: var(--navy);
+    line-height: 1.2; margin-bottom: 16px;
+  }
+  .section-title em { color: var(--blue); font-style: normal; }
+  .section-sub {
+    font-size: 1.05rem; color: var(--gray);
+    max-width: 560px; line-height: 1.7;
+  }
+  .section-header { text-align: center; margin-bottom: 60px; }
+  .section-header .section-sub { margin: 0 auto; }
+  .max-w { max-width: 1260px; margin: 0 auto; }
+
+  /* ── PROBLEMS ── */
+  #problems { background: var(--off-white); }
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .prob-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 28px 24px;
+    border: 1px solid var(--gray-light);
+    display: flex; flex-direction: column; gap: 14px;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+    cursor: default;
+  }
+  .prob-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(10,37,88,.1); border-color: var(--blue-light); }
+  .prob-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, #ffeaea, #ffc9c9);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .prob-icon svg { width: 26px; height: 26px; }
+  .prob-card h3 { font-family: 'Sora',sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); }
+  .prob-card p { font-size: .9rem; color: var(--gray); line-height: 1.6; }
+
+  /* ── SOLUTIONS ── */
+  #solutions { background: var(--white); }
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+  }
+  .sol-card {
+    background: linear-gradient(160deg, var(--sky) 0%, #ddeeff 100%);
+    border-radius: 16px;
+    padding: 32px 26px;
+    border: 1px solid rgba(26,92,204,.12);
+    position: relative; overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .sol-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--blue);
+    border-radius: 4px 0 0 4px;
+    transition: width .3s;
+  }
+  .sol-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(26,92,204,.15); }
+  .sol-card:hover::before { width: 6px; }
+  .sol-icon {
+    width: 56px; height: 56px;
+    background: var(--navy);
+    border-radius: 14px; margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 20px rgba(10,37,88,.2);
+  }
+  .sol-icon svg { width: 28px; height: 28px; fill: none; stroke: var(--white); stroke-width: 1.8; }
+  .sol-card h3 { font-family:'Sora',sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .sol-card p { font-size: .9rem; color: var(--text-mid); line-height: 1.65; }
+  .sol-tag {
+    display: inline-block; margin-top: 16px;
+    background: var(--blue); color: #fff;
+    font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+    padding: 4px 12px; border-radius: 20px;
+  }
+
+  /* ── AUDIENCE ── */
+  #audience { background: var(--navy); }
+  #audience .section-title { color: var(--white); }
+  #audience .section-label { color: #5de8a5; }
+  #audience .section-sub { color: rgba(255,255,255,.6); }
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .aud-card {
+    border-radius: 16px; overflow: hidden;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    transition: transform .3s, background .3s;
+  }
+  .aud-card:hover { transform: translateY(-6px); background: rgba(255,255,255,.09); }
+  .aud-img {
+    height: 180px; overflow: hidden; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .aud-img-bg {
+    position: absolute; inset: 0;
+  }
+  .aud-img-icon { position: relative; z-index: 1; }
+  .aud-img-icon svg { width: 80px; height: 80px; stroke: rgba(255,255,255,.9); fill: none; stroke-width: 1.2; }
+  .aud-label-bar {
+    padding: 14px 20px;
+    background: var(--blue);
+  }
+  .aud-label-bar.green { background: var(--green-dark); }
+  .aud-label-bar.dark { background: var(--navy-mid); }
+  .aud-label-bar h3 { font-family:'Sora',sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+  .aud-body { padding: 20px; }
+  .aud-body ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .aud-body ul li {
+    font-size: .88rem; color: rgba(255,255,255,.75);
+    padding-left: 18px; position: relative; line-height: 1.5;
+  }
+  .aud-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+
+  /* ── NUMBERS ── */
+  #numbers { background: var(--off-white); }
+  .numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 56px;
+  }
+  .num-card {
+    background: var(--white);
+    border-radius: 16px; padding: 36px 28px;
+    text-align: center;
+    border: 1px solid var(--gray-light);
+    box-shadow: 0 4px 20px rgba(10,37,88,.06);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .num-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(10,37,88,.12); }
+  .num-big {
+    font-family: 'Sora',sans-serif;
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 800; color: var(--blue);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .num-big span { color: var(--green); }
+  .num-label { font-size: .9rem; color: var(--gray); font-weight: 500; }
+  .testimonial {
+    background: var(--white);
+    border-radius: 16px; padding: 40px 48px;
+    border-left: 5px solid var(--green);
+    box-shadow: 0 4px 20px rgba(10,37,88,.07);
+    position: relative;
+  }
+  .testimonial::before {
+    content: '"';
+    font-family: Georgia, serif;
+    font-size: 6rem;
+    color: var(--sky);
+    position: absolute; top: 10px; left: 28px;
+    line-height: 1;
+  }
+  .testimonial blockquote {
+    font-size: 1.15rem; color: var(--text);
+    line-height: 1.75; font-style: italic;
+    margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+  .testimonial cite {
+    display: flex; align-items: center; gap: 12px;
+    font-style: normal;
+  }
+  .cite-avatar {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--blue), var(--navy));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora',sans-serif; font-weight: 700; color: #fff; font-size: .9rem;
+  }
+  .cite-info strong { display: block; font-size: .9rem; color: var(--navy); font-family: 'Sora',sans-serif; }
+  .cite-info span { font-size: .8rem; color: var(--gray); }
+
+  /* ── FAQ ── */
+  #faq { background: var(--white); }
+  .faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 800px; margin: 0 auto; }
+  .faq-item {
+    border: 1px solid var(--gray-light);
+    border-radius: 12px; overflow: hidden;
+    transition: box-shadow .3s;
+  }
+  .faq-item.open { box-shadow: 0 8px 24px rgba(26,92,204,.12); border-color: var(--blue-light); }
+  .faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px;
+    cursor: pointer;
+    background: var(--white);
+    transition: background .2s;
+  }
+  .faq-q:hover { background: var(--sky); }
+  .faq-q h4 { font-family:'Sora',sans-serif; font-size: .97rem; font-weight: 600; color: var(--navy); flex: 1; margin-right: 12px; }
+  .faq-arrow {
+    width: 28px; height: 28px; background: var(--sky);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transition: transform .3s, background .3s;
+    flex-shrink: 0;
+  }
+  .faq-item.open .faq-arrow { transform: rotate(45deg); background: var(--blue); }
+  .faq-arrow svg { width: 14px; height: 14px; stroke: var(--navy); }
+  .faq-item.open .faq-arrow svg { stroke: #fff; }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height .4s ease, padding .3s;
+    padding: 0 24px;
+  }
+  .faq-a-inner { padding: 0 0 20px; font-size: .92rem; color: var(--text-mid); line-height: 1.75; }
+  .faq-item.open .faq-a { max-height: 300px; }
+
+  /* ── CTA BAND ── */
+  #cta-band {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 60%, #5de8a5 100%);
+    padding: 80px 6%;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #cta-band::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  #cta-band h2 { font-family:'Sora',sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--white); margin-bottom: 12px; position: relative; }
+  #cta-band p { font-size: 1.05rem; color: rgba(255,255,255,.85); margin-bottom: 32px; position: relative; }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn-white {
+    background: var(--white); color: var(--green-dark);
+    padding: 14px 30px; border-radius: 8px;
+    font-family:'Sora',sans-serif; font-size: .95rem; font-weight: 700;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,0,0,.2); }
+  .btn-ghost {
+    background: transparent; color: var(--white);
+    padding: 14px 30px; border-radius: 8px;
+    font-family:'Sora',sans-serif; font-size: .95rem; font-weight: 600;
+    text-decoration: none; border: 2px solid rgba(255,255,255,.5); cursor: pointer;
+    transition: border-color .2s, background .2s, transform .2s;
+  }
+  .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,.1); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,.7);
+    padding: 64px 6% 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand p { font-size: .88rem; line-height: 1.7; margin-top: 14px; }
+  .footer-col h4 { font-family:'Sora',sans-serif; font-size: .9rem; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a { font-size: .85rem; color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
+  .footer-col ul li a:hover { color: var(--green); }
+  .social-links { display: flex; gap: 12px; margin-top: 20px; }
+  .social-link {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,.08); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; transition: background .2s, transform .2s;
+  }
+  .social-link:hover { background: var(--green); transform: translateY(-2px); }
+  .social-link svg { width: 16px; height: 16px; fill: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 24px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+    gap: 12px;
+  }
+  .footer-bottom p { font-size: .8rem; }
+  .footer-bottom .green { color: var(--green); }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ── COUNTER ── */
+  .counter { display: inline-block; }
+
+  /* ── MOBILE ── */
+  @media(max-width:1024px) {
+    .audience-grid { grid-template-columns: 1fr 1fr; }
+    .numbers-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media(max-width:768px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .numbers-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu {
+      position: fixed; top: 68px; left: 0; right: 0;
+      background: var(--navy);
+      padding: 20px 6%;
+      display: none; flex-direction: column; gap: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.3);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,.8); text-decoration: none;
+      font-size: 1rem; font-weight: 500;
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .mobile-menu a.btn-primary { border: none; justify-content: center; }
+    .testimonial { padding: 30px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    e-SUS <span>PEC</span><div class="dot"></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problems">Problemas</a></li>
+    <li><a href="#solutions">Soluções</a></li>
+    <li><a href="#audience">Para Quem</a></li>
+    <li><a href="#numbers">Resultados</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#cta-band" class="nav-cta">Agendar Demo</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#problems">Problemas</a>
+  <a href="#solutions">Soluções</a>
+  <a href="#audience">Para Quem</a>
+  <a href="#numbers">Resultados</a>
+  <a href="#faq">FAQ</a>
+  <a href="#cta-band" class="btn-primary">Agendar Demonstração</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <svg class="hero-bg-circles" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
+    <circle cx="1100" cy="200" r="300" stroke-width="1"/>
+    <circle cx="1100" cy="200" r="220" stroke-width="1"/>
+    <circle cx="1100" cy="200" r="140" stroke-width="1"/>
+    <circle cx="200" cy="700" r="200" stroke-width="1"/>
+  </svg>
+  <div class="hero-grid max-w">
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Sistema oficial do Ministério da Saúde
+      </div>
+      <h1 class="hero-title reveal">
+        Gestão de Saúde<br><em>Eficiente e Digital</em>:<br>Conheça o e-SUS PEC.
+      </h1>
+      <p class="hero-sub reveal">
+        A solução completa para organizar o atendimento, unificar prontuários e otimizar o envio de dados para o Ministério da Saúde.
+      </p>
+      <div class="hero-btns reveal">
+      </div>
+      <div class="hero-stats reveal">
+        <div class="hero-stat">
+          <strong>+5M</strong>
+          <span>Atendimentos</span>
+        </div>
+        <div class="hero-stat">
+          <strong>30%</strong>
+          <span>Menos espera</span>
+        </div>
+        <div class="hero-stat">
+          <strong>99.9%</strong>
+          <span>Uptime</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual reveal-right">
+      <div class="mockup-wrapper">
+        <div class="mockup-bar">
+          <div class="mockup-dot r"></div>
+          <div class="mockup-dot y"></div>
+          <div class="mockup-dot g"></div>
+          <div class="mockup-title-bar">e-SUS PEC — Painel Principal</div>
+        </div>
+        <div class="mockup-screen">
+          <div class="ms-header">
+            <span>UBS Central — Equipe 01</span>
+            <div class="ms-user">
+              <span style="font-size:.7rem;color:rgba(255,255,255,.6)">Dr. Carlos Silva</span>
+              <div class="ms-avatar">CS</div>
+            </div>
+          </div>
+          <div class="ms-body">
+            <div class="ms-row">
+              <div class="ms-card">
+                <div class="ms-card-label">Atendimentos Hoje</div>
+                <div class="ms-card-value">48</div>
+                <div class="ms-card-sub">↑ 12% vs ontem</div>
+              </div>
+              <div class="ms-card">
+                <div class="ms-card-label">Previne Brasil</div>
+                <div class="ms-card-value">87%</div>
+                <div class="ms-card-sub">Meta: 90%</div>
+              </div>
+              <div class="ms-card">
+                <div class="ms-card-label">RNDS Envios</div>
+                <div class="ms-card-value">1.2k</div>
+                <div class="ms-card-sub" style="color:var(--green)">✓ Sincronizado</div>
+              </div>
+            </div>
+            <div class="ms-chart">
+              <div class="ms-chart-label">Produção Quadrimestral</div>
+              <div class="ms-bars" id="mockup-bars"></div>
+            </div>
+            <div class="ms-table">
+              <div class="ms-table-head">
+                <span>Paciente</span>
+                <span>Hora</span>
+                <span>Status</span>
+              </div>
+              <div class="ms-table-row">
+                <span>Ana Lima, 34a</span>
+                <span>09:15</span>
+                <span><span class="ms-badge ok">Atendido</span></span>
+              </div>
+              <div class="ms-table-row">
+                <span>João Costa, 58a</span>
+                <span>09:40</span>
+                <span><span class="ms-badge warn">Aguarda</span></span>
+              </div>
+              <div class="ms-table-row">
+                <span>Maria Souza, 45a</span>
+                <span>10:00</span>
+                <span><span class="ms-badge ok">Atendido</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bg-line">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" fill="white">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section id="problems">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="section-label reveal">O Diagnóstico</div>
+      <h2 class="section-title reveal">Sua Unidade Está com <em>Problemas?</em></h2>
+      <p class="section-sub reveal">Reconhecemos os desafios do dia a dia nas Unidades de Saúde e desenvolvemos soluções específicas para cada um deles.</p>
+    </div>
+    <div class="problems-grid">
+      <div class="prob-card reveal">
+        <div class="prob-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e53935" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>
+        </div>
+        <h3>Fechamento de Quadrimestre</h3>
+        <p>Dificuldade em consolidar dados e gerar relatórios a tempo para o SISAB, comprometendo repasses financeiros.</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e53935" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>Prontuários Perdidos ou Ilegíveis</h3>
+        <p>Registros em papel geram risco de perda, extravio e dificuldade de acesso ao histórico do paciente.</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e53935" stroke-width="2"><circle cx="9" cy="5" r="2"/><circle cx="15" cy="19" r="2"/><circle cx="19" cy="9" r="2"/><line x1="9" y1="7" x2="9" y2="12"/><line x1="15" y1="12" x2="15" y2="17"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="15" y1="12" x2="19" y2="11"/></svg>
+        </div>
+        <h3>Falta de Integração na Equipe</h3>
+        <p>Médicos, enfermeiros e ACS trabalhando de forma isolada, sem compartilhar informações do paciente em tempo real.</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e53935" stroke-width="2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Risco de Perda de Recursos no SISAB</h3>
+        <p>Erros no envio de produção geram glosas e redução de repasse pelo Ministério da Saúde para o município.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section id="solutions">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="section-label reveal">As Funcionalidades</div>
+      <h2 class="section-title reveal"><em>Soluções</em> para sua Unidade de Saúde</h2>
+      <p class="section-sub reveal">Cada recurso do e-SUS PEC foi pensado para resolver um problema real da Atenção Básica.</p>
+    </div>
+    <div class="solutions-grid">
+      <div class="sol-card reveal">
+        <div class="sol-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>Prontuário Único</h3>
+        <p>Histórico completo do paciente acessível por qualquer profissional da rede, eliminando retrabalho e evitando duplicidade de exames.</p>
+        <span class="sol-tag">Atenção Integrada</span>
+      </div>
+      <div class="sol-card reveal">
+        <div class="sol-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Agenda Inteligente</h3>
+        <p>Organização de fluxos por equipe e especialidade com controle de vagas, encaixes e consultas programadas de forma simples.</p>
+        <span class="sol-tag">Gestão de Fluxo</span>
+      </div>
+      <div class="sol-card reveal">
+        <div class="sol-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>Relatórios em Tempo Real</h3>
+        <p>Acompanhe as metas do Previne Brasil sem esperar o fim do mês. Dashboards completos com indicadores individuais por equipe.</p>
+        <span class="sol-tag">Previne Brasil</span>
+      </div>
+      <div class="sol-card reveal">
+        <div class="sol-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>Sincronização Segura</h3>
+        <p>Envio direto para a base federal (RNDS/SISAB) com validação automática de dados, garantindo que nenhuma produção seja perdida.</p>
+        <span class="sol-tag">SISAB / RNDS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="section-label reveal">Feito Para Você</div>
+      <h2 class="section-title reveal">Para Quem é o <em style="color:var(--green)">e-SUS PEC?</em></h2>
+      <p class="section-sub reveal">O sistema atende todos os profissionais da Atenção Básica com módulos específicos para cada função.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="aud-card reveal">
+        <div class="aud-img">
+          <div class="aud-img-bg" style="background: linear-gradient(135deg, #0a2558, #1a5ccc);"></div>
+          <div class="aud-img-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+          </div>
+        </div>
+        <div class="aud-label-bar">
+          <h3>Para Gestores</h3>
+        </div>
+        <div class="aud-body">
+          <ul>
+            <li>Acompanhamento de indicadores do Previne Brasil em tempo real</li>
+            <li>Relatórios financeiros e metas por equipe e período</li>
+            <li>Controle de produção para garantir repasses corretos</li>
+            <li>Economia de recursos e redução de desperdício</li>
+          </ul>
+        </div>
+      </div>
+      <div class="aud-card reveal">
+        <div class="aud-img">
+          <div class="aud-img-bg" style="background: linear-gradient(135deg, #0f7a3e, #1db870);"></div>
+          <div class="aud-img-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+        </div>
+        <div class="aud-label-bar green">
+          <h3>Para Médicos e Enfermeiros</h3>
+        </div>
+        <div class="aud-body">
+          <ul>
+            <li>Prontuário eletrônico com histórico completo do paciente</li>
+            <li>Prescrição digital com interação medicamentosa</li>
+            <li>Solicitação de exames e encaminhamentos integrados</li>
+            <li>Agilidade no atendimento com menos burocracia</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section id="numbers">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="section-label reveal">Evidências</div>
+      <h2 class="section-title reveal">Resultados <em>Comprovados</em></h2>
+      <p class="section-sub reveal">Números reais de municípios que já adotaram o e-SUS PEC como plataforma de gestão em Atenção Básica.</p>
+    </div>
+    <div class="numbers-grid">
+      <div class="num-card reveal">
+        <div class="num-big"><span>+</span><span class="counter" data-target="5">0</span><span>M</span></div>
+        <div class="num-label">Atendimentos Realizados</div>
+      </div>
+      <div class="num-card reveal">
+        <div class="num-big"><span class="counter" data-target="30">0</span><span>%</span></div>
+        <div class="num-label">Redução no Tempo de Espera</div>
+      </div>
+      <div class="num-card reveal">
+        <div class="num-big"><span class="counter" data-target="98">0</span><span>%</span></div>
+        <div class="num-label">Taxa de Sucesso no Envio ao SISAB</div>
+      </div>
+    </div>
+    <div class="testimonial reveal">
+      <blockquote>
+        "A implementação do e-SUS PEC transformou completamente a nossa gestão. Os relatórios que levavam dias para consolidar agora ficam prontos em minutos. Nossa equipe ganhou tempo, e os pacientes ganharam qualidade no atendimento. Muito mais rápido e eficiente."
+      </blockquote>
+      <cite>
+        <div class="cite-avatar">MS</div>
+        <div class="cite-info">
+          <strong>Maria Santos</strong>
+          <span>Coordenadora de Atenção Básica — Prefeitura de Parnamirim/RN</span>
+        </div>
+      </cite>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="section-label reveal">Tire Suas Dúvidas</div>
+      <h2 class="section-title reveal">Dúvidas <em>Frequentes</em></h2>
+      <p class="section-sub reveal">Respondemos as perguntas mais comuns de gestores e equipes de TI sobre o e-SUS PEC.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-q">
+          <h4>O PEC funciona offline?</h4>
+          <div class="faq-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Sim! O e-SUS PEC possui um módulo offline que permite o registro de atendimentos e visitas domiciliares mesmo sem conexão com a internet. Quando a conexão for restabelecida, os dados são sincronizados automaticamente com o servidor central, garantindo que nenhuma informação seja perdida.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">
+          <h4>Como funciona a migração de dados do sistema anterior?</h4>
+          <div class="faq-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">O processo de migração é realizado com suporte técnico especializado. O Ministério da Saúde disponibiliza scripts de importação compatíveis com os principais sistemas legados. Os dados históricos dos pacientes são preservados e organizados no padrão RNDS, garantindo continuidade do cuidado sem interrupção dos serviços.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">
+          <h4>Quais são os requisitos mínimos de hardware?</h4>
+          <div class="faq-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Para o servidor: processador 4 núcleos, 8GB RAM e 100GB de armazenamento SSD. Para os terminais de atendimento: qualquer computador ou tablet com navegador moderno (Chrome ou Firefox atualizado) e resolução mínima de 1366x768. Não é necessário instalar software nos computadores dos usuários.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">
+          <h4>O sistema é seguro? Como são protegidos os dados dos pacientes?</h4>
+          <div class="faq-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">O e-SUS PEC segue todos os protocolos da LGPD e as normas de segurança do Ministério da Saúde. Os dados trafegam criptografados via HTTPS/TLS 1.3, o acesso é controlado por perfis de usuário com autenticação segura, e os backups são realizados automaticamente a cada 24 horas.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">
+          <h4>O treinamento da equipe está incluído na implantação?</h4>
+          <div class="faq-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Sim. O pacote de implantação inclui treinamento presencial ou remoto para todos os perfis de usuário (médicos, enfermeiros, ACS, recepcionistas e gestores). Também disponibilizamos videoaulas, manuais em PDF e uma base de conhecimento online acessível 24h para consultas posteriores.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section id="cta-band">
+  <div class="max-w" style="position:relative">
+    <h2>Pronto para transformar sua unidade de saúde?</h2>
+    <p>Fale com nossa equipe e descubra como o e-SUS PEC pode ser implantado no seu município.</p>
+    <div class="cta-btns">
+      <a href="mailto:contato@esuspec.saude.gov.br" class="btn-white">Agendar Demonstração Gratuita</a>
+      <a href="https://aps.saude.gov.br/ape/esus" target="_blank" class="btn-ghost">Ver Documentação Oficial</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="max-w">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="font-size:1.3rem">e-SUS <span>PEC</span><div class="dot"></div></a>
+        <p>Plataforma de Atenção Básica do Ministério da Saúde do Brasil. Desenvolvida para organizar, digitalizar e qualificar o cuidado em saúde para todos os brasileiros.</p>
+
+      </div>
+      <div class="footer-col">
+        <h4>Documentação</h4>
+        <ul>
+          <li><a href="#">Manual do e-SUS PEC</a></li>
+          <li><a href="#">Guia de Instalação</a></li>
+          <li><a href="#">Notas de Versão</a></li>
+          <li><a href="#">Base de Conhecimento</a></li>
+          <li><a href="#">Vídeos Tutoriais</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#">Central de Atendimento</a></li>
+          <li><a href="#">Suporte Técnico</a></li>
+          <li><a href="#">Fórum da Comunidade</a></li>
+          <li><a href="#">Reportar um Erro</a></li>
+          <li><a href="#">Status do Sistema</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="#">Agendar Consultoria</a></li>
+          <li><a href="#">Solicitar Treinamento</a></li>
+          <li><a href="#">Portal do DAB/MS</a></li>
+          <li><a href="#">LGPD e Privacidade</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+        </ul>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── NAVBAR SCROLL ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── HAMBURGER ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // ── FAQ ACCORDION ──
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, idx) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), idx * 80);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => revealObserver.observe(el));
+
+  // ── COUNTER ANIMATION ──
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.dataset.target;
+        const duration = 1800;
+        const step = target / (duration / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = Math.floor(current);
+        }, 16);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+
+  // ── MOCKUP BARS ──
+  const barColors = ['#1a5ccc','#1db870','#1a5ccc','#3a7fd4','#1db870','#1a5ccc','#3a7fd4','#1db870'];
+  const barHeights = [65, 78, 55, 88, 72, 90, 68, 82];
+  const barsContainer = document.getElementById('mockup-bars');
+  barHeights.forEach((h, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'ms-bar';
+    bar.style.cssText = `height:${h}%;background:${barColors[i]};animation-delay:${i * 0.12}s`;
+    barsContainer.appendChild(bar);
+  });
+
+  // ── SMOOTH NAV ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+<a href="https://wa.me/5584999999999?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20e-SUS%20PEC" 
+   target="_blank"
+   style="position:fixed; bottom:20px; right:20px; width:60px; height:60px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(0,0,0,.25); z-index:999; transition:.2s;">
+  
+  <svg viewBox="0 0 32 32" style="width:32px; height:32px;">
+    <path fill="white" d="M16 .396C7.163.396 0 7.558 0 16.396c0 2.885.755 5.587 2.066 7.933L0 32l7.86-2.06a15.94 15.94 0 0 0 8.14 2.224c8.837 0 16-7.163 16-16S24.837.396 16 .396zm0 29.2c-2.61 0-5.04-.702-7.128-1.918l-.508-.3-4.664 1.22 1.244-4.54-.33-.524A13.2 13.2 0 0 1 2.8 16.396C2.8 8.978 8.582 3.196 16 3.196c7.418 0 13.2 5.782 13.2 13.2 0 7.418-5.782 13.2-13.2 13.2zm7.29-9.834c-.4-.2-2.37-1.168-2.74-1.3-.37-.132-.64-.2-.91.2s-1.04 1.3-1.27 1.57c-.23.27-.46.3-.86.1-.4-.2-1.69-.62-3.22-1.98-1.19-1.06-1.99-2.36-2.22-2.76-.23-.4-.02-.62.18-.82.18-.18.4-.46.6-.69.2-.23.27-.4.4-.66.13-.27.07-.5-.03-.7-.1-.2-.91-2.2-1.25-3.01-.33-.79-.67-.68-.91-.69h-.78c-.27 0-.7.1-1.06.5-.37.4-1.4 1.37-1.4 3.34s1.43 3.88 1.63 4.15c.2.27 2.82 4.3 6.84 6.02.96.41 1.7.66 2.28.85.96.3 1.83.26 2.52.16.77-.12 2.37-.97 2.7-1.9.33-.93.33-1.73.23-1.9-.1-.17-.37-.27-.77-.47z"/>
+  </svg>
+</a>
+</body>
+</html>
